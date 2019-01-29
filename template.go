@@ -3,12 +3,12 @@
 package main
 
 type LiveChat struct {
-	Timing    Timing   `json:"timing"`    
-	Response  Response `json:"response"`  
-	Endpoint  Endpoint `json:"endpoint"`  
 	URL       string   `json:"url"`       
 	Csn       string   `json:"csn"`       
 	XsrfToken string   `json:"xsrf_token"`
+	Response  Response `json:"response"`  
+	Endpoint  Endpoint `json:"endpoint"`  
+	Timing    Timing   `json:"timing"`    
 }
 
 type Endpoint struct {
@@ -45,12 +45,71 @@ type Action struct {
 }
 
 type AddChatItemAction struct {
-	Item     Item   `json:"item"`    
-	ClientID string `json:"clientId"`
+	Item     Item    `json:"item"`              
+	ClientID *string `json:"clientId,omitempty"`
 }
 
 type Item struct {
-	LiveChatTextMessageRenderer LiveChatTextMessageRenderer `json:"liveChatTextMessageRenderer"`
+	LiveChatTextMessageRenderer *LiveChatTextMessageRenderer `json:"liveChatTextMessageRenderer,omitempty"`
+	LiveChatPaidMessageRenderer *LiveChatPaidMessageRenderer `json:"liveChatPaidMessageRenderer,omitempty"`
+}
+
+type LiveChatPaidMessageRenderer struct {
+	ID                       string              `json:"id"`                      
+	TimestampUsec            string              `json:"timestampUsec"`           
+	AuthorName               Title               `json:"authorName"`              
+	AuthorPhoto              AuthorPhoto         `json:"authorPhoto"`             
+	PurchaseAmountText       Title               `json:"purchaseAmountText"`      
+	Message                  Title               `json:"message"`                 
+	HeaderBackgroundColor    int64               `json:"headerBackgroundColor"`   
+	HeaderTextColor          int64               `json:"headerTextColor"`         
+	BodyBackgroundColor      int64               `json:"bodyBackgroundColor"`     
+	BodyTextColor            int64               `json:"bodyTextColor"`           
+	AuthorExternalChannelID  string              `json:"authorExternalChannelId"` 
+	AuthorNameTextColor      int64               `json:"authorNameTextColor"`     
+	ContextMenuEndpoint      ContextMenuEndpoint `json:"contextMenuEndpoint"`     
+	TimestampColor           int64               `json:"timestampColor"`          
+	ContextMenuAccessibility Accessibility       `json:"contextMenuAccessibility"`
+}
+
+type Title struct {
+	SimpleText string `json:"simpleText"`
+}
+
+type AuthorPhoto struct {
+	Thumbnails []Thumbnail `json:"thumbnails"`
+}
+
+type Thumbnail struct {
+	URL    string `json:"url"`   
+	Width  int64  `json:"width"` 
+	Height int64  `json:"height"`
+}
+
+type Accessibility struct {
+	AccessibilityData AccessibilityData `json:"accessibilityData"`
+}
+
+type AccessibilityData struct {
+	Label string `json:"label"`
+}
+
+type ContextMenuEndpoint struct {
+	ClickTrackingParams             TrackingParams                     `json:"clickTrackingParams"`            
+	CommandMetadata                 ContextMenuEndpointCommandMetadata `json:"commandMetadata"`                
+	LiveChatItemContextMenuEndpoint LiveChatItemContextMenuEndpoint    `json:"liveChatItemContextMenuEndpoint"`
+}
+
+type ContextMenuEndpointCommandMetadata struct {
+	WebCommandMetadata WebCommandMetadata `json:"webCommandMetadata"`
+}
+
+type WebCommandMetadata struct {
+	IgnoreNavigation bool `json:"ignoreNavigation"`
+}
+
+type LiveChatItemContextMenuEndpoint struct {
+	Params string `json:"params"`
 }
 
 type LiveChatTextMessageRenderer struct {
@@ -71,52 +130,12 @@ type AuthorBadge struct {
 
 type LiveChatAuthorBadgeRenderer struct {
 	CustomThumbnail CustomThumbnail `json:"customThumbnail"`
-	Tooltip         Label           `json:"tooltip"`        
+	Tooltip         string          `json:"tooltip"`        
 	Accessibility   Accessibility   `json:"accessibility"`  
-}
-
-type Accessibility struct {
-	AccessibilityData AccessibilityData `json:"accessibilityData"`
-}
-
-type AccessibilityData struct {
-	Label Label `json:"label"`
 }
 
 type CustomThumbnail struct {
 	Thumbnails []URLEndpoint `json:"thumbnails"`
-}
-
-type Title struct {
-	SimpleText string `json:"simpleText"`
-}
-
-type AuthorPhoto struct {
-	Thumbnails []Thumbnail `json:"thumbnails"`
-}
-
-type Thumbnail struct {
-	URL    string `json:"url"`   
-	Width  int64  `json:"width"` 
-	Height int64  `json:"height"`
-}
-
-type ContextMenuEndpoint struct {
-	ClickTrackingParams             TrackingParams                     `json:"clickTrackingParams"`            
-	CommandMetadata                 ContextMenuEndpointCommandMetadata `json:"commandMetadata"`                
-	LiveChatItemContextMenuEndpoint LiveChatItemContextMenuEndpoint    `json:"liveChatItemContextMenuEndpoint"`
-}
-
-type ContextMenuEndpointCommandMetadata struct {
-	WebCommandMetadata WebCommandMetadata `json:"webCommandMetadata"`
-}
-
-type WebCommandMetadata struct {
-	IgnoreNavigation bool `json:"ignoreNavigation"`
-}
-
-type LiveChatItemContextMenuEndpoint struct {
-	Params string `json:"params"`
 }
 
 type Continuation struct {
@@ -218,14 +237,7 @@ type Info struct {
 	St int64 `json:"st"`
 }
 
-type Label string
-const (
-	新会员 Label = "新会员"
-	评论操作 Label = "评论操作"
-)
-
 type TrackingParams string
 const (
-	CAEQl98BIhMIhYf9R9OS4AIVToTECh0M5Wr TrackingParams = "CAEQl98BIhMIhYf9r9OS4AIVToTECh0M5wr_"
-	CAEQl98BIhMItIekrdOS4AIV2MTECh3XXQJc TrackingParams = "CAEQl98BIhMItIekrdOS4AIV2MTECh3xXQJc"
+	CAEQl98BIhMI0Dr8KOiS4AIVMVDtCh0MpAC TrackingParams = "CAEQl98BIhMI0dr8kOiS4AIVmVDtCh0mpAC-"
 )

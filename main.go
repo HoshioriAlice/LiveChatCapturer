@@ -63,9 +63,16 @@ func main() {
 		dec.Decode(&lc)
 		// 获取评论信息并打印
 		for _, action := range lc.Response.ContinuationContents.LiveChatContinuation.Actions {
-			name := action.AddChatItemAction.Item.LiveChatTextMessageRenderer.AuthorName.SimpleText
-			message := action.AddChatItemAction.Item.LiveChatTextMessageRenderer.Message.SimpleText
-			fmt.Println(name+":", message)
+			if action.AddChatItemAction.Item.LiveChatTextMessageRenderer != nil {
+				name := action.AddChatItemAction.Item.LiveChatTextMessageRenderer.AuthorName.SimpleText
+				message := action.AddChatItemAction.Item.LiveChatTextMessageRenderer.Message.SimpleText
+				fmt.Println(name+":", message)
+			} else if action.AddChatItemAction.Item.LiveChatPaidMessageRenderer != nil {
+				name := action.AddChatItemAction.Item.LiveChatPaidMessageRenderer.AuthorName.SimpleText
+				message := action.AddChatItemAction.Item.LiveChatPaidMessageRenderer.Message.SimpleText
+				purchase := action.AddChatItemAction.Item.LiveChatPaidMessageRenderer.PurchaseAmountText.SimpleText
+				fmt.Println(name+":", purchase, message)
+			}
 		}
 		// 更新Continuation信息
 		if len(lc.Response.ContinuationContents.LiveChatContinuation.Continuations) > 0 {
