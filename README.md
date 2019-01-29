@@ -5,9 +5,9 @@
 ## Usage
 
 ```bash
-git clone https://github.com/HoshioriAlice/LiveChatCapture
+git clone https://github.com/HoshioriAlice/LiveChatCapturer
 go build
-./LiveChatCapture ${直播间URL}
+./LiveChatCapturer ${直播间URL}
 ```
 
 需要在墙外服务器运行。
@@ -15,3 +15,7 @@ go build
 ## 过程
 
 先获取直播间网页，从中找到获取livechat需要的continuation信息，然后每隔一秒发送get_live_chat请求获取评论信息。
+
+## TODO
+
+捕获SC评论
