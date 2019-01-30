@@ -3,17 +3,17 @@
 package main
 
 type LiveChat struct {
-	URL       string   `json:"url"`       
-	Csn       string   `json:"csn"`       
+	URL       string   `json:"url"`
+	Csn       string   `json:"csn"`
 	XsrfToken string   `json:"xsrf_token"`
-	Response  Response `json:"response"`  
-	Endpoint  Endpoint `json:"endpoint"`  
-	Timing    Timing   `json:"timing"`    
+	Response  Response `json:"response"`
+	Endpoint  Endpoint `json:"endpoint"`
+	Timing    Timing   `json:"timing"`
 }
 
 type Endpoint struct {
 	CommandMetadata EndpointCommandMetadata `json:"commandMetadata"`
-	URLEndpoint     URLEndpoint             `json:"urlEndpoint"`    
+	URLEndpoint     URLEndpoint             `json:"urlEndpoint"`
 }
 
 type EndpointCommandMetadata struct {
@@ -25,9 +25,22 @@ type URLEndpoint struct {
 }
 
 type Response struct {
-	ResponseContext      ResponseContext      `json:"responseContext"`     
+	ResponseContext      ResponseContext      `json:"responseContext"`
 	ContinuationContents ContinuationContents `json:"continuationContents"`
-	TrackingParams       string               `json:"trackingParams"`      
+	TrackingParams       string               `json:"trackingParams"`
+}
+
+type InvalidationContinuationData struct {
+	InvalidationID      InvalidationID `json:"invalidationId"`
+	TimeoutMS           int64          `json:"timeoutMs"`
+	Continuation        string         `json:"continuation"`
+	ClickTrackingParams string         `json:"clickTrackingParams"`
+}
+
+type InvalidationID struct {
+	ObjectSource             int64  `json:"objectSource"`
+	ObjectID                 string `json:"objectId"`
+	ProtoCreationTimestampMS string `json:"protoCreationTimestampMs"`
 }
 
 type ContinuationContents struct {
@@ -35,8 +48,8 @@ type ContinuationContents struct {
 }
 
 type LiveChatContinuation struct {
-	Continuations  []Continuation `json:"continuations"` 
-	Actions        []Action       `json:"actions"`       
+	Continuations  []Continuation `json:"continuations"`
+	Actions        []Action       `json:"actions"`
 	TrackingParams TrackingParams `json:"trackingParams"`
 }
 
@@ -45,7 +58,7 @@ type Action struct {
 }
 
 type AddChatItemAction struct {
-	Item     Item    `json:"item"`              
+	Item     Item    `json:"item"`
 	ClientID *string `json:"clientId,omitempty"`
 }
 
@@ -55,20 +68,20 @@ type Item struct {
 }
 
 type LiveChatPaidMessageRenderer struct {
-	ID                       string              `json:"id"`                      
-	TimestampUsec            string              `json:"timestampUsec"`           
-	AuthorName               Title               `json:"authorName"`              
-	AuthorPhoto              AuthorPhoto         `json:"authorPhoto"`             
-	PurchaseAmountText       Title               `json:"purchaseAmountText"`      
-	Message                  Title               `json:"message"`                 
-	HeaderBackgroundColor    int64               `json:"headerBackgroundColor"`   
-	HeaderTextColor          int64               `json:"headerTextColor"`         
-	BodyBackgroundColor      int64               `json:"bodyBackgroundColor"`     
-	BodyTextColor            int64               `json:"bodyTextColor"`           
-	AuthorExternalChannelID  string              `json:"authorExternalChannelId"` 
-	AuthorNameTextColor      int64               `json:"authorNameTextColor"`     
-	ContextMenuEndpoint      ContextMenuEndpoint `json:"contextMenuEndpoint"`     
-	TimestampColor           int64               `json:"timestampColor"`          
+	ID                       string              `json:"id"`
+	TimestampUsec            string              `json:"timestampUsec"`
+	AuthorName               Title               `json:"authorName"`
+	AuthorPhoto              AuthorPhoto         `json:"authorPhoto"`
+	PurchaseAmountText       Title               `json:"purchaseAmountText"`
+	Message                  Title               `json:"message"`
+	HeaderBackgroundColor    int64               `json:"headerBackgroundColor"`
+	HeaderTextColor          int64               `json:"headerTextColor"`
+	BodyBackgroundColor      int64               `json:"bodyBackgroundColor"`
+	BodyTextColor            int64               `json:"bodyTextColor"`
+	AuthorExternalChannelID  string              `json:"authorExternalChannelId"`
+	AuthorNameTextColor      int64               `json:"authorNameTextColor"`
+	ContextMenuEndpoint      ContextMenuEndpoint `json:"contextMenuEndpoint"`
+	TimestampColor           int64               `json:"timestampColor"`
 	ContextMenuAccessibility Accessibility       `json:"contextMenuAccessibility"`
 }
 
@@ -81,8 +94,8 @@ type AuthorPhoto struct {
 }
 
 type Thumbnail struct {
-	URL    string `json:"url"`   
-	Width  int64  `json:"width"` 
+	URL    string `json:"url"`
+	Width  int64  `json:"width"`
 	Height int64  `json:"height"`
 }
 
@@ -95,8 +108,8 @@ type AccessibilityData struct {
 }
 
 type ContextMenuEndpoint struct {
-	ClickTrackingParams             TrackingParams                     `json:"clickTrackingParams"`            
-	CommandMetadata                 ContextMenuEndpointCommandMetadata `json:"commandMetadata"`                
+	ClickTrackingParams             TrackingParams                     `json:"clickTrackingParams"`
+	CommandMetadata                 ContextMenuEndpointCommandMetadata `json:"commandMetadata"`
 	LiveChatItemContextMenuEndpoint LiveChatItemContextMenuEndpoint    `json:"liveChatItemContextMenuEndpoint"`
 }
 
@@ -113,14 +126,14 @@ type LiveChatItemContextMenuEndpoint struct {
 }
 
 type LiveChatTextMessageRenderer struct {
-	Message                  Title               `json:"message"`                 
-	AuthorName               Title               `json:"authorName"`              
-	AuthorPhoto              AuthorPhoto         `json:"authorPhoto"`             
-	ContextMenuEndpoint      ContextMenuEndpoint `json:"contextMenuEndpoint"`     
-	ID                       string              `json:"id"`                      
-	TimestampUsec            string              `json:"timestampUsec"`           
-	AuthorBadges             []AuthorBadge       `json:"authorBadges"`            
-	AuthorExternalChannelID  string              `json:"authorExternalChannelId"` 
+	Message                  Title               `json:"message"`
+	AuthorName               Title               `json:"authorName"`
+	AuthorPhoto              AuthorPhoto         `json:"authorPhoto"`
+	ContextMenuEndpoint      ContextMenuEndpoint `json:"contextMenuEndpoint"`
+	ID                       string              `json:"id"`
+	TimestampUsec            string              `json:"timestampUsec"`
+	AuthorBadges             []AuthorBadge       `json:"authorBadges"`
+	AuthorExternalChannelID  string              `json:"authorExternalChannelId"`
 	ContextMenuAccessibility Accessibility       `json:"contextMenuAccessibility"`
 }
 
@@ -130,8 +143,8 @@ type AuthorBadge struct {
 
 type LiveChatAuthorBadgeRenderer struct {
 	CustomThumbnail CustomThumbnail `json:"customThumbnail"`
-	Tooltip         string          `json:"tooltip"`        
-	Accessibility   Accessibility   `json:"accessibility"`  
+	Tooltip         string          `json:"tooltip"`
+	Accessibility   Accessibility   `json:"accessibility"`
 }
 
 type CustomThumbnail struct {
@@ -139,32 +152,33 @@ type CustomThumbnail struct {
 }
 
 type Continuation struct {
-	TimedContinuationData TimedContinuationData `json:"timedContinuationData"`
+	TimedContinuationData        *TimedContinuationData        `json:"timedContinuationData"`
+	InvalidationContinuationData *InvalidationContinuationData `json:"invalidationContinuationData"`
 }
 
 type TimedContinuationData struct {
-	TimeoutMS           int64          `json:"timeoutMs"`          
-	Continuation        string         `json:"continuation"`       
+	TimeoutMS           int64          `json:"timeoutMs"`
+	Continuation        string         `json:"continuation"`
 	ClickTrackingParams TrackingParams `json:"clickTrackingParams"`
 }
 
 type ResponseContext struct {
-	ServiceTrackingParams           []ServiceTrackingParam          `json:"serviceTrackingParams"`          
+	ServiceTrackingParams           []ServiceTrackingParam          `json:"serviceTrackingParams"`
 	WebResponseContextExtensionData WebResponseContextExtensionData `json:"webResponseContextExtensionData"`
 }
 
 type ServiceTrackingParam struct {
 	Service string  `json:"service"`
-	Params  []Param `json:"params"` 
+	Params  []Param `json:"params"`
 }
 
 type Param struct {
-	Key   string `json:"key"`  
+	Key   string `json:"key"`
 	Value string `json:"value"`
 }
 
 type WebResponseContextExtensionData struct {
-	YtConfigData   YtConfigData   `json:"ytConfigData"`  
+	YtConfigData   YtConfigData   `json:"ytConfigData"`
 	FeedbackDialog FeedbackDialog `json:"feedbackDialog"`
 }
 
@@ -173,14 +187,14 @@ type FeedbackDialog struct {
 }
 
 type PolymerOptOutFeedbackDialogRenderer struct {
-	Title         Title      `json:"title"`        
-	Subtitle      Disclaimer `json:"subtitle"`     
-	Options       []Option   `json:"options"`      
-	Disclaimer    Disclaimer `json:"disclaimer"`   
+	Title         Title      `json:"title"`
+	Subtitle      Disclaimer `json:"subtitle"`
+	Options       []Option   `json:"options"`
+	Disclaimer    Disclaimer `json:"disclaimer"`
 	DismissButton Button     `json:"dismissButton"`
-	SubmitButton  Button     `json:"submitButton"` 
-	CloseButton   Button     `json:"closeButton"`  
-	CancelButton  Button     `json:"cancelButton"` 
+	SubmitButton  Button     `json:"submitButton"`
+	CloseButton   Button     `json:"closeButton"`
+	CancelButton  Button     `json:"cancelButton"`
 }
 
 type Button struct {
@@ -188,9 +202,9 @@ type Button struct {
 }
 
 type ButtonRenderer struct {
-	Style      string `json:"style"`         
-	Size       string `json:"size"`          
-	IsDisabled bool   `json:"isDisabled"`    
+	Style      string `json:"style"`
+	Size       string `json:"size"`
+	IsDisabled bool   `json:"isDisabled"`
 	Text       *Title `json:"text,omitempty"`
 	Icon       *Icon  `json:"icon,omitempty"`
 }
@@ -204,12 +218,12 @@ type Disclaimer struct {
 }
 
 type Run struct {
-	Text               string    `json:"text"`                        
+	Text               string    `json:"text"`
 	NavigationEndpoint *Endpoint `json:"navigationEndpoint,omitempty"`
 }
 
 type Option struct {
-	PolymerOptOutFeedbackOptionRenderer     *PolymerOptOutFeedbackOptionRenderer     `json:"polymerOptOutFeedbackOptionRenderer,omitempty"`    
+	PolymerOptOutFeedbackOptionRenderer     *PolymerOptOutFeedbackOptionRenderer     `json:"polymerOptOutFeedbackOptionRenderer,omitempty"`
 	PolymerOptOutFeedbackNullOptionRenderer *PolymerOptOutFeedbackNullOptionRenderer `json:"polymerOptOutFeedbackNullOptionRenderer,omitempty"`
 }
 
@@ -218,14 +232,14 @@ type PolymerOptOutFeedbackNullOptionRenderer struct {
 }
 
 type PolymerOptOutFeedbackOptionRenderer struct {
-	OptionKey           string `json:"optionKey"`          
-	Description         Title  `json:"description"`        
+	OptionKey           string `json:"optionKey"`
+	Description         Title  `json:"description"`
 	ResponsePlaceholder Title  `json:"responsePlaceholder"`
 }
 
 type YtConfigData struct {
-	Csn          string `json:"csn"`         
-	VisitorData  string `json:"visitorData"` 
+	Csn          string `json:"csn"`
+	VisitorData  string `json:"visitorData"`
 	SessionIndex int64  `json:"sessionIndex"`
 }
 
@@ -238,6 +252,7 @@ type Info struct {
 }
 
 type TrackingParams string
+
 const (
 	CAEQl98BIhMI0Dr8KOiS4AIVMVDtCh0MpAC TrackingParams = "CAEQl98BIhMI0dr8kOiS4AIVmVDtCh0mpAC-"
 )

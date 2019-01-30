@@ -39,6 +39,61 @@ Client：
 
 先获取直播间网页，从中找到获取livechat需要的continuation信息，然后每隔一秒发送get_live_chat请求获取评论信息。
 
+Client与服务器通信：
+
+```bash
+Client:
+# 发送直播间地址
+GET / HTTP/1.1
+Action: Connect
+Live-Page: ${live_url}
+
+Server:
+# 忽略HTTP响应头，只显示正文
+# 成功时
+{
+  "status": "Success",
+  "continuation": "${continuation}"
+}
+# 失败时
+{
+  "status": "Failed",
+  "continuation": ""
+}
+
+Client:
+# 更新直播评论
+GET / HTTP/1.1
+Action: Update
+Continuation: ${continuation}
+
+Server:
+# 忽略HTTP响应头，只显示正文
+# 成功时
+{
+  "continuation": ${new_continuation},
+  "messages": [
+    {
+      "sender": ${sender},
+      "message": ${message},
+      # 非SC时该字段为空字符串
+      "purchase": ${purchase}
+    },
+    {
+      "sender": ${sender2},
+      "message": ${message2},
+      # 非SC时该字段为空字符串
+      "purchase": ${purchase2}
+    }
+    ...
+  ]
+}
+
+# 失败时
+HTTP/1.1 404 Not Found
+
+```
+
 ## TODO
 
 我真的不会写C#，Bug一堆是肯定的，界面是我乱糊的，求求有能天狗改下。
