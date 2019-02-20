@@ -2,6 +2,17 @@
 
 捕获油管直播评论。
 
+## Persistence
+
+捕获并持久化直播评论。
+
+```
+git clone https://github.com/HoshioriAlice/LiveChatCapturer
+cd persistence
+go build
+./persistence ${直播间地址} ${输出文件}
+```
+
 ## Usage
 
 Server:
